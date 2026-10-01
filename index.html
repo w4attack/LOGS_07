@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSOLE // Stream Logs</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050705;
+            --text-color: #22c55e;
+            --border-color: #14532d;
+            --dim-color: #166534;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', monospace;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: center;
+            width: 100%;
+            margin: 4rem 0;
+        }
+
+        .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; color: #ffffff; }
+        .hero p { color: #86efac; font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+
+        .terminal-box {
+            background: #022c14;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            height: 220px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .log-line { opacity: 0.8; margin-bottom: 4px; }
+        .log-line.highlight { color: #ffffff; font-weight: bold; }
+
+        .action-btn {
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .action-btn:hover { background: var(--text-color); color: #000000; }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            font-size: 0.8rem;
+            width: 100%;
+        }
+
+        .watermark { color: var(--dim-color); text-decoration: none; transition: color 0.2s; }
+        .watermark:hover { color: var(--text-color); }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #022c14;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            font-size: 0.85rem;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(150%);
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 100;
+        }
+        .toast.show { visibility: visible; opacity: 1; transform: translateY(0); }
+
+        @media(max-width: 900px) { main { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div>// LOGS_07</div>
+        <div>SECURE_DAEMON</div>
+    </header>
+    <main>
+        <div class="hero">
+            <h1>Поток системных логов</h1>
+            <p>Интерфейс мониторинга фоновых процессов и событий безопасности в реальном времени с фильтрацией уровней критичности.</p>
+            <button class="action-btn" onclick="showToast('Дамп памяти успешно сохранен')">Сделать дамп</button>
+        </div>
+        <div class="terminal-box">
+            <div class="log-line">[16:08:00] INITIALIZING KERNEL MODULES...</div>
+            <div class="log-line">[16:08:02] DATABASE MIGRATION APPLIED.</div>
+            <div class="log-line highlight">[16:08:04] SECURE CONNECTION ESTABLISHED (PORT 20128).</div>
+        </div>
+    </main>
+    <footer>
+        <div>wA Studio // Terminal Flow</div>
+        <a href="https://w4attack.github.io/port/" target="_blank" class="watermark">w3bAttacking © 2026 // wA Studio</a>
+    </footer>
+    <div id="toast" class="toast">Уведомление</div>
+    <script>
+        function showToast(text) {
+            const t = document.getElementById('toast');
+            t.textContent = text;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
